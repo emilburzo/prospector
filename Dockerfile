@@ -5,7 +5,7 @@ FROM node:20-alpine AS frontend-builder
 
 WORKDIR /app/frontend
 COPY frontend/package*.json ./
-RUN npm ci
+RUN npm install
 COPY frontend/ ./
 RUN npm run build
 
@@ -62,8 +62,6 @@ USER appuser
 EXPOSE 8080
 
 ENV PYTHONPATH=/app/backend
-ENV DATABASE_URL=${DATABASE_URL}
-ENV OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
-ENV OPENROUTER_MODEL=${OPENROUTER_MODEL:-anthropic/claude-3.5-sonnet}
+ENV OPENROUTER_MODEL=anthropic/claude-3.5-sonnet
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
