@@ -102,7 +102,10 @@ async def rank_job_lead(
         db.commit()
         db.refresh(lead)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Failed to rank job lead: {str(e)}")
+        # Log the actual error for debugging but don't expose to user
+        import logging
+        logging.error(f"Failed to rank job lead {lead_id}: {str(e)}")
+        raise HTTPException(status_code=500, detail="Failed to rank job lead. Please try again later.")
     
     return lead
 
@@ -140,10 +143,13 @@ async def rank_job_leads_batch(
                 "match_percentage": match_result["match_percentage"]
             })
         except Exception as e:
+            # Log the actual error for debugging but don't expose to user
+            import logging
+            logging.error(f"Failed to rank job lead {lead_id}: {str(e)}")
             results.append({
                 "lead_id": lead_id,
                 "status": "error",
-                "error": str(e)
+                "error": "Failed to rank this lead"
             })
     
     return {"results": results}
