@@ -3,17 +3,20 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from app.routers import applications, leads, resumes
-from app.database import engine
-from app.models import Base
-
-# Create database tables
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Prospector - Job Application Tracker",
     description="AI-powered job application tracker and lead finder",
     version="1.0.0"
 )
+
+
+@app.on_event("startup")
+async def startup_event():
+    """Initialize database tables on startup"""
+    from app.database import engine, Base
+    from app.models import JobApplication, JobLead, Resume  # Import to register models
+    Base.metadata.create_all(bind=engine)
 
 # Mount static files
 app.mount("/static", StaticFiles(directory="static"), name="static")
