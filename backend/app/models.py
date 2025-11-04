@@ -61,8 +61,8 @@ class JobLead(Base):
     __tablename__ = "job_leads"
 
     id = Column(Integer, primary_key=True, index=True)
-    company_name = Column(String, nullable=False, index=True)
-    role_name = Column(String, nullable=False)
+    company_name = Column(String, nullable=True, index=True)
+    role_name = Column(String, nullable=True)
     job_ad_content = Column(Text, nullable=False)
     job_url = Column(String, nullable=True)
     match_percentage = Column(Float, nullable=True)

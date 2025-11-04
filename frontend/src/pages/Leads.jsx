@@ -177,7 +177,7 @@ function Leads() {
               <div className="flex justify-between items-start">
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <h3 className="text-xl font-semibold">{lead.company_name}</h3>
+                    <h3 className="text-xl font-semibold">{lead.company_name || '(No Company Name)'}</h3>
                     {lead.match_percentage !== null && (
                       <span className="badge badge-primary">
                         {lead.match_percentage}% match
@@ -187,7 +187,7 @@ function Leads() {
                       <span className="badge badge-success">Promoted</span>
                     )}
                   </div>
-                  <p className="text-lg text-dark-muted mb-2">{lead.role_name}</p>
+                  <p className="text-lg text-dark-muted mb-2">{lead.role_name || '(No Role Name)'}</p>
                   {lead.job_url && (
                     <a
                       href={lead.job_url}
@@ -269,24 +269,24 @@ function Leads() {
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="label">Company Name</label>
+                <label className="label">Company Name (optional)</label>
                 <input
                   type="text"
                   className="input"
                   value={formData.company_name}
                   onChange={(e) => setFormData({ ...formData, company_name: e.target.value })}
-                  required
+                  placeholder="e.g., Acme Corp"
                 />
               </div>
 
               <div>
-                <label className="label">Role Name</label>
+                <label className="label">Role Name (optional)</label>
                 <input
                   type="text"
                   className="input"
                   value={formData.role_name}
                   onChange={(e) => setFormData({ ...formData, role_name: e.target.value })}
-                  required
+                  placeholder="e.g., Senior Software Engineer"
                 />
               </div>
 
