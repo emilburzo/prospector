@@ -139,12 +139,26 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
     try:
         extracted = await openrouter.extract_job_application_fields(lead.job_ad_content)
 
+        # Handle extracted_content - convert to string if it's a dict
+        extracted_content = extracted.get("extracted_content", lead.job_ad_content)
+        if isinstance(extracted_content, dict):
+            import json
+            extracted_content = json.dumps(extracted_content, indent=2)
+
         # Create the job application
+        # Use extracted company name only if it's valid (not "Unknown" or empty)
+        extracted_company = extracted.get("company_name", "")
+        company_name = lead.company_name if (not extracted_company or extracted_company == "Unknown") else extracted_company
+
+        # Use extracted role name only if it's valid
+        extracted_role = extracted.get("role_name", "")
+        role_name = lead.role_name if not extracted_role else extracted_role
+
         application_data = {
-            "company_name": extracted.get("company_name", lead.company_name),
-            "role_name": extracted.get("role_name", lead.role_name),
+            "company_name": company_name,
+            "role_name": role_name,
             "stage": models.JobStage.NOT_STARTED,
-            "job_ad_content": extracted.get("extracted_content", lead.job_ad_content),
+            "job_ad_content": extracted_content,
             "match_percentage": lead.match_percentage,
             "match_reasoning": lead.match_reasoning,
         }
