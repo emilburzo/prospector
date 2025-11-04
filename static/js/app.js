@@ -213,13 +213,13 @@ async function loadLeads() {
             <div class="job-card">
                 <h4>${lead.role_name}</h4>
                 <div class="company">${lead.company_name}</div>
-                ${lead.match_percentage ? `
+                ${lead.match_percentage !== null && lead.match_percentage !== undefined ? `
                     <div class="match-percentage ${getMatchClass(lead.match_percentage)}">${lead.match_percentage.toFixed(1)}% Match</div>
                     ${lead.match_reasoning ? `<p><small>${lead.match_reasoning.substring(0, 150)}...</small></p>` : ''}
                 ` : '<p><em>Not yet ranked</em></p>'}
                 ${lead.source ? `<p><strong>Source:</strong> ${lead.source}</p>` : ''}
                 <div class="actions">
-                    ${!lead.match_percentage ? `<button onclick="rankLead(${lead.id})">Rank</button>` : ''}
+                    ${lead.match_percentage === null || lead.match_percentage === undefined ? `<button onclick="rankLead(${lead.id})">Rank</button>` : ''}
                     <button onclick="promoteLead(${lead.id})" class="secondary">Promote</button>
                     <button onclick="deleteLead(${lead.id})" class="danger">Delete</button>
                 </div>
