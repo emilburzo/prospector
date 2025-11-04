@@ -4,314 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Prospector - Job Application Tracker</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: #e0e0e0;
-            background-color: #121212;
-        }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 2rem;
-            border-radius: 10px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.5);
-        }
-        
-        header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        header p {
-            font-size: 1.1rem;
-            opacity: 0.9;
-        }
-        
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 2rem;
-            border-bottom: 2px solid #333;
-            padding-bottom: 0;
-        }
-        
-        .tab {
-            padding: 12px 24px;
-            background: #1e1e1e;
-            border: none;
-            border-radius: 8px 8px 0 0;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 500;
-            color: #b0b0b0;
-            transition: all 0.3s;
-            border-bottom: 3px solid transparent;
-        }
-        
-        .tab:hover {
-            background: #2a2a2a;
-            color: #8a9aff;
-        }
-        
-        .tab.active {
-            background: #252525;
-            color: #8a9aff;
-            border-bottom: 3px solid #667eea;
-        }
-        
-        .tab-content {
-            display: none;
-            background: #1e1e1e;
-            padding: 2rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-        
-        .tab-content.active {
-            display: block;
-        }
-        
-        h2 {
-            color: #e0e0e0;
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-            color: #b0b0b0;
-        }
-        
-        input[type="text"],
-        input[type="number"],
-        input[type="url"],
-        textarea,
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 2px solid #333;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: border-color 0.3s;
-            background: #252525;
-            color: #e0e0e0;
-        }
-        
-        input:focus,
-        textarea:focus,
-        select:focus {
-            outline: none;
-            border-color: #667eea;
-        }
-        
-        textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-        
-        button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 6px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-        
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
-        
-        button:active {
-            transform: translateY(0);
-        }
-        
-        button.secondary {
-            background: #6c757d;
-        }
-        
-        button.danger {
-            background: #dc3545;
-        }
-        
-        .btn-group {
-            display: flex;
-            gap: 10px;
-            margin-top: 1rem;
-        }
-        
-        .card {
-            background: #1e1e1e;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 1rem;
-            border-left: 4px solid #667eea;
-        }
-        
-        .card h3 {
-            color: #8a9aff;
-            margin-bottom: 1rem;
-        }
-        
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
-            margin-top: 2rem;
-        }
-        
-        .job-card {
-            background: #1e1e1e;
-            padding: 1.5rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-            border-left: 4px solid #667eea;
-        }
-        
-        .job-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.3);
-        }
-        
-        .job-card h4 {
-            color: #e0e0e0;
-            margin-bottom: 0.5rem;
-            font-size: 1.2rem;
-        }
-        
-        .job-card .company {
-            color: #8a9aff;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-        
-        .job-card p {
-            color: #b0b0b0;
-        }
-        
-        .card p {
-            color: #b0b0b0;
-        }
-        
-        .job-card .stage {
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-        }
-        
-        .stage.not_started { background: #1a3a52; color: #64b5f6; }
-        .stage.applied { background: #4a3a1a; color: #ffb74d; }
-        .stage.in_progress { background: #1a4a1a; color: #81c784; }
-        .stage.offer { background: #3a1a4a; color: #ba68c8; }
-        .stage.rejected { background: #4a1a1a; color: #e57373; }
-        .stage.no_answer { background: #2a2a2a; color: #9e9e9e; }
-        
-        .match-percentage {
-            font-size: 2rem;
-            font-weight: bold;
-            color: #8a9aff;
-            margin: 1rem 0;
-        }
-        
-        .match-high { color: #81c784; }
-        .match-medium { color: #ffb74d; }
-        .match-low { color: #e57373; }
-        
-        .actions {
-            display: flex;
-            gap: 8px;
-            margin-top: 1rem;
-        }
-        
-        .actions button {
-            padding: 8px 16px;
-            font-size: 0.9rem;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 2rem;
-            color: #b0b0b0;
-        }
-        
-        .error {
-            background: #4a1a1a;
-            color: #e57373;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-        }
-        
-        .success {
-            background: #1a4a1a;
-            color: #81c784;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-        }
-        
-        .empty-state {
-            text-align: center;
-            padding: 3rem;
-            color: #666;
-        }
-        
-        .empty-state h3 {
-            margin-bottom: 1rem;
-            color: #888;
-        }
-        
-        .sort-controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 1.5rem;
-            align-items: center;
-        }
-        
-        .sort-controls label {
-            margin: 0;
-        }
-        
-        .filter-group {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-        }
-    </style>
+    <link rel="stylesheet" href="/static/css/style.css">
 </head>
 <body>
+    <div class="toast-container" id="toast-container"></div>
+    
     <div class="container">
         <header>
             <h1>🎯 Prospector</h1>
@@ -319,18 +16,23 @@
         </header>
         
         <div class="tabs">
-            <button class="tab active" onclick="switchTab('applications', event)">Job Applications</button>
-            <button class="tab" onclick="switchTab('leads', event)">Job Leads</button>
-            <button class="tab" onclick="switchTab('resume', event)">Resume</button>
+            <button class="tab active" onclick="switchTab('applications', event)" data-tab="applications">Job Applications</button>
+            <button class="tab" onclick="switchTab('leads', event)" data-tab="leads">Job Leads</button>
+            <button class="tab" onclick="switchTab('resume', event)" data-tab="resume">Resume</button>
         </div>
         
         <!-- Job Applications Tab -->
         <div id="applications-tab" class="tab-content active">
-            <h2>Job Applications</h2>
+            <div class="section-header">
+                <h2>Job Applications</h2>
+                <button class="add-button" onclick="toggleForm('application-form')">
+                    <span>+ Add Application</span>
+                </button>
+            </div>
             
-            <div class="card">
-                <h3>Add New Application</h3>
-                <form id="application-form">
+            <div id="application-form" class="form-container collapsed">
+                <h3 style="color: #8a9aff; margin-bottom: 1.5rem;">Add New Application</h3>
+                <form id="application-form-element">
                     <div class="form-group">
                         <label for="app-company">Company Name *</label>
                         <input type="text" id="app-company" required>
@@ -362,23 +64,24 @@
                         <label for="app-match">Match Percentage</label>
                         <input type="number" id="app-match" min="0" max="100" step="0.1">
                     </div>
-                    <button type="submit">Add Application</button>
+                    <div class="btn-group">
+                        <button type="submit">Add Application</button>
+                        <button type="button" class="secondary" onclick="toggleForm('application-form')">Cancel</button>
+                    </div>
                 </form>
             </div>
             
             <div class="filter-group">
-                <div>
-                    <label>Filter by Stage:</label>
-                    <select id="stage-filter" onchange="loadApplications()">
-                        <option value="">All Stages</option>
-                        <option value="not_started">Not Started</option>
-                        <option value="applied">Applied</option>
-                        <option value="in_progress">In Progress</option>
-                        <option value="offer">Offer</option>
-                        <option value="rejected">Rejected</option>
-                        <option value="no_answer">No Answer</option>
-                    </select>
-                </div>
+                <label>Filter by Stage:</label>
+                <select id="stage-filter" onchange="loadApplications()">
+                    <option value="">All Stages</option>
+                    <option value="not_started">Not Started</option>
+                    <option value="applied">Applied</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="offer">Offer</option>
+                    <option value="rejected">Rejected</option>
+                    <option value="no_answer">No Answer</option>
+                </select>
             </div>
             
             <div id="applications-list"></div>
@@ -386,11 +89,16 @@
         
         <!-- Job Leads Tab -->
         <div id="leads-tab" class="tab-content">
-            <h2>Job Leads</h2>
+            <div class="section-header">
+                <h2>Job Leads</h2>
+                <button class="add-button" onclick="toggleForm('lead-form')">
+                    <span>+ Add Lead</span>
+                </button>
+            </div>
             
-            <div class="card">
-                <h3>Add New Job Lead</h3>
-                <form id="lead-form">
+            <div id="lead-form" class="form-container collapsed">
+                <h3 style="color: #8a9aff; margin-bottom: 1.5rem;">Add New Job Lead</h3>
+                <form id="lead-form-element">
                     <div class="form-group">
                         <label for="lead-company">Company Name *</label>
                         <input type="text" id="lead-company" required>
@@ -414,6 +122,7 @@
                     <div class="btn-group">
                         <button type="submit">Add Lead & Rank</button>
                         <button type="button" class="secondary" onclick="submitLead(false)">Add Lead Only</button>
+                        <button type="button" class="secondary" onclick="toggleForm('lead-form')">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -430,11 +139,16 @@
         
         <!-- Resume Tab -->
         <div id="resume-tab" class="tab-content">
-            <h2>Resume Management</h2>
+            <div class="section-header">
+                <h2>Resume Management</h2>
+                <button class="add-button" onclick="toggleForm('resume-form')">
+                    <span>+ Add Resume</span>
+                </button>
+            </div>
             
-            <div class="card">
-                <h3>Upload/Add Resume</h3>
-                <form id="resume-form">
+            <div id="resume-form" class="form-container collapsed">
+                <h3 style="color: #8a9aff; margin-bottom: 1.5rem;">Upload/Add Resume</h3>
+                <form id="resume-form-element">
                     <div class="form-group">
                         <label for="resume-content">Resume Content *</label>
                         <textarea id="resume-content" required style="min-height: 300px;" placeholder="Paste your resume text here..."></textarea>
@@ -443,7 +157,10 @@
                         <label for="resume-filename">Filename (optional)</label>
                         <input type="text" id="resume-filename" placeholder="e.g., john_doe_resume.txt">
                     </div>
-                    <button type="submit">Save as Active Resume</button>
+                    <div class="btn-group">
+                        <button type="submit">Save as Active Resume</button>
+                        <button type="button" class="secondary" onclick="toggleForm('resume-form')">Cancel</button>
+                    </div>
                 </form>
             </div>
             
@@ -451,283 +168,6 @@
         </div>
     </div>
     
-    <script>
-        const API_BASE = '/api';
-        
-        // Tab switching
-        function switchTab(tabName, event) {
-            // Remove active class from all tabs and contents
-            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
-            
-            // Add active class to clicked tab (if event is provided)
-            if (event && event.target) {
-                event.target.classList.add('active');
-            } else {
-                // Fallback: find and activate the tab by matching text content
-                document.querySelectorAll('.tab').forEach(tab => {
-                    if (tab.textContent.toLowerCase().includes(tabName.toLowerCase())) {
-                        tab.classList.add('active');
-                    }
-                });
-            }
-            
-            // Show the corresponding content
-            document.getElementById(`${tabName}-tab`).classList.add('active');
-            
-            // Load data for the active tab
-            if (tabName === 'applications') loadApplications();
-            if (tabName === 'leads') loadLeads();
-            if (tabName === 'resume') loadActiveResume();
-        }
-        
-        // Job Applications
-        document.getElementById('application-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const data = {
-                company_name: document.getElementById('app-company').value,
-                role_name: document.getElementById('app-role').value,
-                stage: document.getElementById('app-stage').value,
-                job_ad: document.getElementById('app-job-ad').value,
-                notes: document.getElementById('app-notes').value,
-                job_match_percentage: parseFloat(document.getElementById('app-match').value) || null
-            };
-            
-            try {
-                const response = await fetch(`${API_BASE}/applications/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.ok) {
-                    alert('Application added successfully!');
-                    e.target.reset();
-                    loadApplications();
-                } else {
-                    alert('Failed to add application');
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        });
-        
-        async function loadApplications() {
-            const stageFilter = document.getElementById('stage-filter').value;
-            const url = stageFilter 
-                ? `${API_BASE}/applications/?stage=${stageFilter}`
-                : `${API_BASE}/applications/`;
-            
-            try {
-                const response = await fetch(url);
-                const applications = await response.json();
-                
-                const container = document.getElementById('applications-list');
-                
-                if (applications.length === 0) {
-                    container.innerHTML = '<div class="empty-state"><h3>No applications yet</h3><p>Add your first job application above</p></div>';
-                    return;
-                }
-                
-                container.innerHTML = '<div class="card-grid">' + applications.map(app => `
-                    <div class="job-card">
-                        <h4>${app.role_name}</h4>
-                        <div class="company">${app.company_name}</div>
-                        <span class="stage ${app.stage}">${app.stage.replace('_', ' ').toUpperCase()}</span>
-                        ${app.job_match_percentage ? `<div class="match-percentage ${getMatchClass(app.job_match_percentage)}">${app.job_match_percentage.toFixed(1)}% Match</div>` : ''}
-                        ${app.notes ? `<p><strong>Notes:</strong> ${app.notes.substring(0, 100)}${app.notes.length > 100 ? '...' : ''}</p>` : ''}
-                        <div class="actions">
-                            <button onclick="deleteApplication(${app.id})" class="danger">Delete</button>
-                        </div>
-                    </div>
-                `).join('') + '</div>';
-            } catch (error) {
-                console.error('Error loading applications:', error);
-            }
-        }
-        
-        async function deleteApplication(id) {
-            if (!confirm('Are you sure you want to delete this application?')) return;
-            
-            try {
-                await fetch(`${API_BASE}/applications/${id}`, { method: 'DELETE' });
-                loadApplications();
-            } catch (error) {
-                alert('Error deleting application');
-            }
-        }
-        
-        // Job Leads
-        document.getElementById('lead-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            submitLead(true);
-        });
-        
-        async function submitLead(rankImmediately) {
-            const data = {
-                company_name: document.getElementById('lead-company').value,
-                role_name: document.getElementById('lead-role').value,
-                job_posting: document.getElementById('lead-posting').value,
-                source: document.getElementById('lead-source').value,
-                url: document.getElementById('lead-url').value
-            };
-            
-            try {
-                const response = await fetch(`${API_BASE}/leads/?rank_immediately=${rankImmediately}`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.ok) {
-                    alert('Job lead added successfully!');
-                    document.getElementById('lead-form').reset();
-                    loadLeads();
-                } else {
-                    alert('Failed to add job lead');
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        }
-        
-        async function loadLeads() {
-            const sortByMatch = document.getElementById('sort-by-match').checked;
-            
-            try {
-                const response = await fetch(`${API_BASE}/leads/?sort_by_match=${sortByMatch}`);
-                const leads = await response.json();
-                
-                const container = document.getElementById('leads-list');
-                
-                if (leads.length === 0) {
-                    container.innerHTML = '<div class="empty-state"><h3>No job leads yet</h3><p>Add your first job lead above</p></div>';
-                    return;
-                }
-                
-                container.innerHTML = '<div class="card-grid">' + leads.map(lead => `
-                    <div class="job-card">
-                        <h4>${lead.role_name}</h4>
-                        <div class="company">${lead.company_name}</div>
-                        ${lead.match_percentage ? `
-                            <div class="match-percentage ${getMatchClass(lead.match_percentage)}">${lead.match_percentage.toFixed(1)}% Match</div>
-                            ${lead.match_reasoning ? `<p><small>${lead.match_reasoning.substring(0, 150)}...</small></p>` : ''}
-                        ` : '<p><em>Not yet ranked</em></p>'}
-                        ${lead.source ? `<p><strong>Source:</strong> ${lead.source}</p>` : ''}
-                        <div class="actions">
-                            ${!lead.match_percentage ? `<button onclick="rankLead(${lead.id})">Rank</button>` : ''}
-                            <button onclick="promoteLead(${lead.id})" class="secondary">Promote</button>
-                            <button onclick="deleteLead(${lead.id})" class="danger">Delete</button>
-                        </div>
-                    </div>
-                `).join('') + '</div>';
-            } catch (error) {
-                console.error('Error loading leads:', error);
-            }
-        }
-        
-        async function rankLead(id) {
-            try {
-                const response = await fetch(`${API_BASE}/leads/${id}/rank`, { method: 'POST' });
-                if (response.ok) {
-                    alert('Lead ranked successfully!');
-                    loadLeads();
-                } else {
-                    const error = await response.json();
-                    alert('Failed to rank lead: ' + (error.detail || 'Unknown error'));
-                }
-            } catch (error) {
-                alert('Error ranking lead: ' + error.message);
-            }
-        }
-        
-        async function promoteLead(id) {
-            if (!confirm('Promote this lead to a job application?')) return;
-            
-            try {
-                const response = await fetch(`${API_BASE}/leads/${id}/promote`, { method: 'POST' });
-                if (response.ok) {
-                    alert('Lead promoted successfully!');
-                    loadLeads();
-                } else {
-                    alert('Failed to promote lead');
-                }
-            } catch (error) {
-                alert('Error promoting lead: ' + error.message);
-            }
-        }
-        
-        async function deleteLead(id) {
-            if (!confirm('Are you sure you want to delete this lead?')) return;
-            
-            try {
-                await fetch(`${API_BASE}/leads/${id}`, { method: 'DELETE' });
-                loadLeads();
-            } catch (error) {
-                alert('Error deleting lead');
-            }
-        }
-        
-        // Resume
-        document.getElementById('resume-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            const data = {
-                content: document.getElementById('resume-content').value,
-                filename: document.getElementById('resume-filename').value || null
-            };
-            
-            try {
-                const response = await fetch(`${API_BASE}/resumes/`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(data)
-                });
-                
-                if (response.ok) {
-                    alert('Resume saved successfully!');
-                    loadActiveResume();
-                } else {
-                    alert('Failed to save resume');
-                }
-            } catch (error) {
-                alert('Error: ' + error.message);
-            }
-        });
-        
-        async function loadActiveResume() {
-            try {
-                const response = await fetch(`${API_BASE}/resumes/active`);
-                const container = document.getElementById('active-resume-display');
-                
-                if (response.ok) {
-                    const resume = await response.json();
-                    container.innerHTML = `
-                        <div class="card">
-                            <h3>Active Resume</h3>
-                            ${resume.filename ? `<p><strong>Filename:</strong> ${resume.filename}</p>` : ''}
-                            <p><strong>Created:</strong> ${new Date(resume.created_at).toLocaleDateString()}</p>
-                            <p><strong>Content Preview:</strong></p>
-                            <pre style="background: #f5f5f5; padding: 1rem; border-radius: 6px; overflow-x: auto; white-space: pre-wrap;">${resume.content.substring(0, 500)}${resume.content.length > 500 ? '...' : ''}</pre>
-                        </div>
-                    `;
-                } else {
-                    container.innerHTML = '<div class="empty-state"><h3>No active resume</h3><p>Upload your resume above to start ranking job leads</p></div>';
-                }
-            } catch (error) {
-                console.error('Error loading resume:', error);
-            }
-        }
-        
-        function getMatchClass(percentage) {
-            if (percentage >= 70) return 'match-high';
-            if (percentage >= 40) return 'match-medium';
-            return 'match-low';
-        }
-        
-        // Initial load
-        loadApplications();
-    </script>
+    <script src="/static/js/app.js"></script>
 </body>
 </html>
