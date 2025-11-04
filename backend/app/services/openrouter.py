@@ -27,10 +27,12 @@ Please provide:
 1. A match percentage (0-100) indicating how well the candidate's experience and skills align with the job requirements
 2. A detailed reasoning explaining the match percentage, highlighting strengths and gaps
 
+IMPORTANT: In the reasoning field, format your response with proper paragraph breaks. Use \\n\\n to separate major sections and \\n for list items.
+
 Format your response EXACTLY as JSON:
 {{
   "match_percentage": <number between 0 and 100>,
-  "reasoning": "<detailed explanation>"
+  "reasoning": "<detailed explanation with \\n for line breaks>"
 }}"""
 
         headers = {

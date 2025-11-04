@@ -195,7 +195,7 @@ function Leads() {
                   )}
                   {lead.match_reasoning && (
                     <div className="mt-3 p-3 bg-dark-bg rounded">
-                      <p className="text-sm text-dark-muted">{lead.match_reasoning}</p>
+                      <p className="text-sm text-dark-muted whitespace-pre-line">{lead.match_reasoning}</p>
                     </div>
                   )}
                   <p className="text-sm text-dark-muted mt-2">
