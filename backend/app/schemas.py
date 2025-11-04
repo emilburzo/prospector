@@ -87,8 +87,8 @@ class JobApplication(JobApplicationBase):
 
 # Job Lead Schemas
 class JobLeadBase(BaseModel):
-    company_name: str
-    role_name: str
+    company_name: Optional[str] = None
+    role_name: Optional[str] = None
     job_ad_content: str
     job_url: Optional[str] = None
 
