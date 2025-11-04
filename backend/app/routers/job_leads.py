@@ -131,9 +131,6 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
     if not lead:
         raise HTTPException(status_code=404, detail="Job lead not found")
 
-    if lead.is_promoted:
-        raise HTTPException(status_code=400, detail="This lead has already been promoted")
-
     # Extract fields using OpenRouter
     openrouter = OpenRouterService()
     try:
@@ -176,10 +173,10 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
             changed_at=datetime.utcnow()
         )
         db.add(history_entry)
+        db.commit()
 
-        # Mark the lead as promoted
-        lead.is_promoted = True
-        lead.promoted_to_application_id = db_application.id
+        # Delete the lead after successful promotion
+        db.delete(lead)
         db.commit()
 
         db.refresh(db_application)
