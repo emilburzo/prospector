@@ -15,19 +15,19 @@ export default apiClient;
 
 // Resumes API
 export const resumesApi = {
-  getAll: () => apiClient.get('/api/resumes'),
+  getAll: () => apiClient.get('/api/resumes/'),
   getActive: () => apiClient.get('/api/resumes/active'),
   getById: (id) => apiClient.get(`/api/resumes/${id}`),
-  create: (data) => apiClient.post('/api/resumes', data),
+  create: (data) => apiClient.post('/api/resumes/', data),
   update: (id, data) => apiClient.put(`/api/resumes/${id}`, data),
   delete: (id) => apiClient.delete(`/api/resumes/${id}`),
 };
 
 // Applications API
 export const applicationsApi = {
-  getAll: (params) => apiClient.get('/api/applications', { params }),
+  getAll: (params) => apiClient.get('/api/applications/', { params }),
   getById: (id) => apiClient.get(`/api/applications/${id}`),
-  create: (data) => apiClient.post('/api/applications', data),
+  create: (data) => apiClient.post('/api/applications/', data),
   update: (id, data) => apiClient.put(`/api/applications/${id}`, data),
   delete: (id) => apiClient.delete(`/api/applications/${id}`),
   getHistory: (id) => apiClient.get(`/api/applications/${id}/history`),
@@ -35,9 +35,9 @@ export const applicationsApi = {
 
 // Leads API
 export const leadsApi = {
-  getAll: (params) => apiClient.get('/api/leads', { params }),
+  getAll: (params) => apiClient.get('/api/leads/', { params }),
   getById: (id) => apiClient.get(`/api/leads/${id}`),
-  create: (data) => apiClient.post('/api/leads', data),
+  create: (data) => apiClient.post('/api/leads/', data),
   update: (id, data) => apiClient.put(`/api/leads/${id}`, data),
   delete: (id) => apiClient.delete(`/api/leads/${id}`),
   analyze: (id, resumeId) => apiClient.post(`/api/leads/${id}/analyze`, null, {
