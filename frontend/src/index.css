@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-bg text-dark-text min-h-screen;
+  }
+}
+
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded-lg font-medium transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply btn bg-accent-primary hover:bg-blue-600 text-white;
+  }
+
+  .btn-secondary {
+    @apply btn bg-dark-card hover:bg-dark-hover text-dark-text border border-dark-border;
+  }
+
+  .btn-success {
+    @apply btn bg-accent-success hover:bg-green-600 text-white;
+  }
+
+  .btn-danger {
+    @apply btn bg-accent-danger hover:bg-red-600 text-white;
+  }
+
+  .card {
+    @apply bg-dark-card border border-dark-border rounded-lg p-6;
+  }
+
+  .input {
+    @apply w-full px-4 py-2 bg-dark-bg border border-dark-border rounded-lg text-dark-text placeholder-dark-muted focus:outline-none focus:border-accent-primary transition-colors;
+  }
+
+  .textarea {
+    @apply input min-h-[100px] resize-y;
+  }
+
+  .select {
+    @apply input cursor-pointer;
+  }
+
+  .label {
+    @apply block text-sm font-medium text-dark-text mb-2;
+  }
+
+  .badge {
+    @apply px-3 py-1 rounded-full text-xs font-medium;
+  }
+
+  .badge-primary {
+    @apply badge bg-accent-primary/20 text-accent-primary;
+  }
+
+  .badge-success {
+    @apply badge bg-accent-success/20 text-accent-success;
+  }
+
+  .badge-warning {
+    @apply badge bg-accent-warning/20 text-accent-warning;
+  }
+
+  .badge-danger {
+    @apply badge bg-accent-danger/20 text-accent-danger;
+  }
+
+  .badge-secondary {
+    @apply badge bg-accent-secondary/20 text-accent-secondary;
+  }
+}
