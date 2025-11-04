@@ -132,6 +132,12 @@ function Leads() {
     setEditingLead(null);
   };
 
+  const truncateText = (text, maxLength = 250) => {
+    if (!text) return '';
+    if (text.length <= maxLength) return text;
+    return text.substring(0, maxLength).trim() + '...';
+  };
+
   if (loading) {
     return <div className="text-center py-12">Loading...</div>;
   }
@@ -197,6 +203,21 @@ function Leads() {
                     >
                       View Job Posting
                     </a>
+                  )}
+                  {lead.job_ad_content && (
+                    <div className="mt-3 p-3 bg-dark-bg/50 rounded border border-dark-border">
+                      <p className="text-sm text-dark-text leading-relaxed">
+                        {truncateText(lead.job_ad_content, 250)}
+                        {lead.job_ad_content.length > 250 && (
+                          <button
+                            onClick={() => handleEdit(lead)}
+                            className="text-accent-primary hover:underline ml-1"
+                          >
+                            Read more
+                          </button>
+                        )}
+                      </p>
+                    </div>
                   )}
                   {lead.match_reasoning && (
                     <div className="mt-3 p-3 bg-dark-bg rounded">
