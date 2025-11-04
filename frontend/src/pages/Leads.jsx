@@ -227,14 +227,14 @@ function Leads() {
                   )}
                   <button
                     onClick={() => handleEdit(lead)}
-                    className="btn-secondary flex items-center"
+                    className="btn-secondary flex items-center justify-center w-10 h-10 p-2"
                     title="Edit"
                   >
                     <Edit2 className="w-4 h-4" />
                   </button>
                   <button
                     onClick={() => handleDelete(lead.id)}
-                    className="btn-danger flex items-center"
+                    className="btn-danger flex items-center justify-center w-10 h-10 p-2"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
