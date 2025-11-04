@@ -145,7 +145,16 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
         # Create the job application
         # Use extracted company name only if it's valid (not "Unknown" or empty)
         extracted_company = extracted.get("company_name", "")
-        company_name = lead.company_name if lead.company_name and (not extracted_company or extracted_company == "Unknown") else extracted_company or "Unknown"
+        # Determine company_name with clear logic
+        if lead.company_name:
+            if not extracted_company or extracted_company == "Unknown":
+                company_name = lead.company_name
+            else:
+                company_name = extracted_company
+        elif extracted_company and extracted_company != "Unknown":
+            company_name = extracted_company
+        else:
+            company_name = "Unknown"
 
         # Use extracted role name only if it's valid
         extracted_role = extracted.get("role_name", "")
