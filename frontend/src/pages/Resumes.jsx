@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, CheckCircle, X } from 'lucide-react';
 import { resumesApi } from '../api/client';
+import { useNotification } from '../components/NotificationProvider';
 
 function Resumes() {
+  const { showToast, showConfirm } = useNotification();
   const [resumes, setResumes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -39,14 +41,16 @@ function Resumes() {
       setShowModal(false);
       resetForm();
       loadResumes();
+      showToast('Resume saved successfully!', 'success');
     } catch (error) {
       console.error('Error saving resume:', error);
-      alert('Error saving resume. Please try again.');
+      showToast('Error saving resume. Please try again.', 'error');
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this resume?')) return;
+    const confirmed = await showConfirm('Are you sure you want to delete this resume?');
+    if (!confirmed) return;
 
     try {
       await resumesApi.delete(id);

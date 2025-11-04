@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Sparkles, ArrowRight, X, SortDesc } from 'lucide-react';
 import { leadsApi, resumesApi } from '../api/client';
+import { useNotification } from '../components/NotificationProvider';
 
 function Leads() {
+  const { showToast, showConfirm } = useNotification();
   const [leads, setLeads] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -57,12 +59,13 @@ function Leads() {
       loadLeads();
     } catch (error) {
       console.error('Error saving lead:', error);
-      alert('Error saving lead. Please try again.');
+      showToast('Error saving lead. Please try again.', 'error');
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this lead?')) return;
+    const confirmed = await showConfirm('Are you sure you want to delete this lead?');
+    if (!confirmed) return;
 
     try {
       await leadsApi.delete(id);
@@ -85,7 +88,7 @@ function Leads() {
 
   const handleAnalyze = async (leadId) => {
     if (!activeResume) {
-      alert('Please create and activate a resume first!');
+      showToast('Please create and activate a resume first!', 'warning');
       return;
     }
 
@@ -93,25 +96,27 @@ function Leads() {
     try {
       await leadsApi.analyze(leadId);
       loadLeads();
+      showToast('Lead analyzed successfully!', 'success');
     } catch (error) {
       console.error('Error analyzing lead:', error);
-      alert('Error analyzing lead. Please check your OpenRouter API configuration.');
+      showToast('Error analyzing lead. Please check your OpenRouter API configuration.', 'error');
     } finally {
       setAnalyzing(null);
     }
   };
 
   const handlePromote = async (leadId) => {
-    if (!confirm('Promote this lead to a job application?')) return;
+    const confirmed = await showConfirm('Promote this lead to a job application?');
+    if (!confirmed) return;
 
     setPromoting(leadId);
     try {
       await leadsApi.promote(leadId);
       loadLeads();
-      alert('Lead successfully promoted to application!');
+      showToast('Lead successfully promoted to application!', 'success');
     } catch (error) {
       console.error('Error promoting lead:', error);
-      alert('Error promoting lead. Please try again.');
+      showToast('Error promoting lead. Please try again.', 'error');
     } finally {
       setPromoting(null);
     }

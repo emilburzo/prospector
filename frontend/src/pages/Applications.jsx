@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, History, X } from 'lucide-react';
 import { applicationsApi } from '../api/client';
+import { useNotification } from '../components/NotificationProvider';
 
 const STAGE_OPTIONS = [
   { value: 'not_started', label: 'Not Started', color: 'secondary' },
@@ -12,6 +13,7 @@ const STAGE_OPTIONS = [
 ];
 
 function Applications() {
+  const { showToast, showConfirm } = useNotification();
   const [applications, setApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
@@ -61,14 +63,16 @@ function Applications() {
       setShowModal(false);
       resetForm();
       loadApplications();
+      showToast('Application saved successfully!', 'success');
     } catch (error) {
       console.error('Error saving application:', error);
-      alert('Error saving application. Please try again.');
+      showToast('Error saving application. Please try again.', 'error');
     }
   };
 
   const handleDelete = async (id) => {
-    if (!confirm('Are you sure you want to delete this application?')) return;
+    const confirmed = await showConfirm('Are you sure you want to delete this application?');
+    if (!confirmed) return;
 
     try {
       await applicationsApi.delete(id);

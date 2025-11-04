@@ -3,10 +3,12 @@ import { Briefcase, Target, FileText } from 'lucide-react';
 import Applications from './pages/Applications';
 import Leads from './pages/Leads';
 import Resumes from './pages/Resumes';
+import { NotificationProvider } from './components/NotificationProvider';
 
 function App() {
   return (
-    <Router>
+    <NotificationProvider>
+      <Router>
       <div className="min-h-screen bg-dark-bg">
         {/* Header */}
         <header className="bg-dark-card border-b border-dark-border">
@@ -77,6 +79,7 @@ function App() {
         </main>
       </div>
     </Router>
+    </NotificationProvider>
   );
 }
 
