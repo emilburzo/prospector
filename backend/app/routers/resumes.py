@@ -11,9 +11,9 @@ router = APIRouter(prefix="/api/resumes", tags=["resumes"])
 def create_resume(resume: schemas.ResumeCreate, db: Session = Depends(get_db)):
     """Create a new resume"""
     # Set all other resumes to inactive
-    db.query(models.Resume).update({"is_active": 0})
+    db.query(models.Resume).update({"is_active": False})
 
-    db_resume = models.Resume(**resume.model_dump(), is_active=1)
+    db_resume = models.Resume(**resume.model_dump(), is_active=True)
     db.add(db_resume)
     db.commit()
     db.refresh(db_resume)
@@ -30,7 +30,7 @@ def list_resumes(skip: int = 0, limit: int = 100, db: Session = Depends(get_db))
 @router.get("/active", response_model=schemas.Resume)
 def get_active_resume(db: Session = Depends(get_db)):
     """Get the currently active resume"""
-    resume = db.query(models.Resume).filter(models.Resume.is_active == 1).first()
+    resume = db.query(models.Resume).filter(models.Resume.is_active == True).first()
     if not resume:
         raise HTTPException(status_code=404, detail="No active resume found")
     return resume
@@ -56,7 +56,7 @@ def update_resume(resume_id: int, resume: schemas.ResumeUpdate, db: Session = De
 
     # If setting this resume as active, deactivate all others
     if update_data.get("is_active") is True:
-        db.query(models.Resume).update({"is_active": 0})
+        db.query(models.Resume).update({"is_active": False})
 
     for field, value in update_data.items():
         setattr(db_resume, field, value)

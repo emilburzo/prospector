@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Text, DateTime, Float, ForeignKey, Enum as SQLEnum
+from sqlalchemy import Column, Integer, String, Text, DateTime, Float, ForeignKey, Boolean, Enum as SQLEnum
 from sqlalchemy.orm import relationship
 from datetime import datetime
 import enum
@@ -20,7 +20,7 @@ class Resume(Base):
     id = Column(Integer, primary_key=True, index=True)
     content = Column(Text, nullable=False)
     file_name = Column(String, nullable=True)
-    is_active = Column(Integer, default=1)  # Boolean: 1 for active, 0 for inactive
+    is_active = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
@@ -67,7 +67,7 @@ class JobLead(Base):
     job_url = Column(String, nullable=True)
     match_percentage = Column(Float, nullable=True)
     match_reasoning = Column(Text, nullable=True)
-    is_promoted = Column(Integer, default=0)  # Boolean: 1 if promoted to application, 0 otherwise
+    is_promoted = Column(Boolean, default=False)
     promoted_to_application_id = Column(Integer, ForeignKey("job_applications.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

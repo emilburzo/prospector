@@ -34,7 +34,7 @@ def list_leads(
     if company:
         query = query.filter(models.JobLead.company_name.ilike(f"%{company}%"))
     if promoted is not None:
-        query = query.filter(models.JobLead.is_promoted == (1 if promoted else 0))
+        query = query.filter(models.JobLead.is_promoted == promoted)
 
     if sort_by_match:
         # Sort by match_percentage descending, nulls last
@@ -101,7 +101,7 @@ async def analyze_lead(
         if not resume:
             raise HTTPException(status_code=404, detail="Resume not found")
     else:
-        resume = db.query(models.Resume).filter(models.Resume.is_active == 1).first()
+        resume = db.query(models.Resume).filter(models.Resume.is_active == True).first()
         if not resume:
             raise HTTPException(status_code=404, detail="No active resume found")
 
@@ -164,7 +164,7 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
         db.add(history_entry)
 
         # Mark the lead as promoted
-        lead.is_promoted = 1
+        lead.is_promoted = True
         lead.promoted_to_application_id = db_application.id
         db.commit()
 
