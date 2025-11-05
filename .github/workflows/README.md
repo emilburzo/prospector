@@ -7,8 +7,8 @@ This directory contains the CI/CD workflows for the Prospector project.
 ### Test Workflow (`test.yml`)
 
 **Triggers:**
-- Push to `main` or `develop` branches
-- Pull requests targeting `main` or `develop` branches
+- Push to **any branch**
+- Pull requests to **any branch**
 
 **What it does:**
 1. ✅ Runs tests on multiple Python versions (3.11, 3.12, 3.13)
@@ -149,7 +149,7 @@ Check that:
 1. Workflow file is in `.github/workflows/` directory
 2. File has `.yml` or `.yaml` extension
 3. YAML syntax is valid
-4. Branch name matches trigger configuration
+4. Repository Actions are enabled (Settings → Actions → General)
 
 ### Slow Workflow Runs
 

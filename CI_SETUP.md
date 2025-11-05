@@ -7,8 +7,8 @@ GitHub Actions workflow has been successfully set up to automatically run tests!
 ### 1. Test Workflow (`.github/workflows/test.yml`)
 
 A comprehensive CI/CD workflow that:
-- ✅ Runs on every push to `main` or `develop` branches
-- ✅ Runs on every pull request to `main` or `develop`
+- ✅ Runs on every push to **any branch**
+- ✅ Runs on every pull request
 - ✅ Tests on Python 3.11, 3.12, and 3.13
 - ✅ Generates coverage reports (96% coverage!)
 - ✅ Uploads coverage to Codecov (optional)
@@ -87,20 +87,20 @@ act push
 
 ## Workflow Behavior
 
-### On Push to `main` or `develop`:
+### On Push to Any Branch:
 1. Checks out code
 2. Sets up Python 3.11, 3.12, and 3.13 (parallel)
 3. Installs dependencies (with caching)
 4. Runs all 78 tests
 5. Generates coverage reports
 6. Uploads coverage (if Codecov token exists)
-7. Creates coverage badge (Python 3.13 + main only)
+7. Creates coverage badge (Python 3.13 + `main` branch only)
 8. Displays test summary
 
 ### On Pull Requests:
 1. Same as above, but:
-   - Coverage badge is not generated
-   - Results are posted as PR check
+   - Coverage badge is not generated (only on `main` branch pushes)
+   - Results are posted as PR status check
 
 ### Expected Duration:
 - First run: ~2-3 minutes (no cache)
@@ -124,8 +124,8 @@ Check:
 1. File is in `.github/workflows/` directory ✅
 2. File has `.yml` extension ✅
 3. YAML syntax is valid ✅
-4. Push is to `main` or `develop` branch
-5. Repository Actions are enabled (Settings → Actions)
+4. Repository Actions are enabled (Settings → Actions → General)
+5. You pushed a commit (workflows run on push/PR events)
 
 ### Tests Failing in CI?
 
