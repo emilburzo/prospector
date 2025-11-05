@@ -1,6 +1,43 @@
 import httpx
+import json
+import re
 from typing import Dict, Any
 from app.config import get_settings
+
+
+def clean_json_string(json_str: str) -> str:
+    """
+    Clean a JSON string by removing/escaping control characters that can cause parsing errors.
+    This handles cases where AI models return unescaped control characters in JSON strings.
+    """
+    # First try to parse as-is
+    try:
+        json.loads(json_str)
+        return json_str
+    except json.JSONDecodeError:
+        pass
+
+    # If that fails, clean the string
+    # Replace common control characters with their escaped versions
+    # We need to be careful to only replace them inside string values, not in the JSON structure itself
+
+    # Strategy: Use regex to find string values and replace control characters within them
+    def replace_control_chars(match):
+        """Replace control characters in a matched JSON string value"""
+        string_content = match.group(1)
+        # Replace control characters with escaped versions
+        string_content = string_content.replace('\n', '\\n')
+        string_content = string_content.replace('\r', '\\r')
+        string_content = string_content.replace('\t', '\\t')
+        string_content = string_content.replace('\b', '\\b')
+        string_content = string_content.replace('\f', '\\f')
+        return f'"{string_content}"'
+
+    # Match JSON string values (quoted strings, handling escaped quotes)
+    # This regex matches: " followed by any chars (including escaped quotes) followed by "
+    cleaned = re.sub(r'"([^"\\]*(?:\\.[^"\\]*)*)"', replace_control_chars, json_str)
+
+    return cleaned
 
 
 class OpenRouterService:
@@ -63,9 +100,9 @@ Format your response EXACTLY as JSON:
 
             content = result["choices"][0]["message"]["content"]
 
-            # Parse the JSON response
-            import json
-            analysis = json.loads(content)
+            # Parse the JSON response, cleaning control characters first
+            cleaned_content = clean_json_string(content)
+            analysis = json.loads(cleaned_content)
 
             return {
                 "match_percentage": float(analysis["match_percentage"]),
@@ -121,8 +158,8 @@ Format your response EXACTLY as JSON:
 
             content = result["choices"][0]["message"]["content"]
 
-            # Parse the JSON response
-            import json
-            extracted = json.loads(content)
+            # Parse the JSON response, cleaning control characters first
+            cleaned_content = clean_json_string(content)
+            extracted = json.loads(cleaned_content)
 
             return extracted
