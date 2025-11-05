@@ -164,7 +164,7 @@ async def promote_lead(lead_id: int, db: Session = Depends(get_db)):
             "company_name": company_name,
             "role_name": role_name,
             "stage": models.JobStage.NOT_STARTED,
-            "job_ad_content": extracted_content,
+            "job_ad_content": lead.job_ad_content,
             "match_percentage": lead.match_percentage,
             "match_reasoning": lead.match_reasoning,
         }
